@@ -1,6 +1,6 @@
-<?php namespace App\Services;
+<?php namespace Clinica\Services;
 
-use App\User;
+use Clinica\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 

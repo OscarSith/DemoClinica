@@ -1,4 +1,12 @@
-<?php namespace App\Http\Controllers;
+<?php namespace Clinica\Http\Controllers;
+
+use Request;
+use Clinica\Cargo;
+use Clinica\Rol;
+use Clinica\Persona;
+use Clinica\Personal;
+use Clinica\Cuenta;
+use Clinica\CuentaRol;
 
 class WelcomeController extends Controller {
 
@@ -30,7 +38,41 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('welcome');
+		$Cargo = new Cargo();
+		$cargos = $Cargo->listar();
+
+		$Rol = new Rol();
+		$roles = $Rol->listar();
+
+		return view('welcome', compact('cargos', 'roles'));
+	}
+
+	public function register()
+	{
+		$values = Request::all();
+		try {
+			\DB::transaction(function() use ($values){
+				$Persona = new Persona();
+				$Persona->newRegister($values);
+
+				$values['persona_id'] = $Persona->getKey();
+				$Personal = new Personal();
+				$Personal->add($values);
+
+				$values['personal_id'] = $Personal->getKey();
+				$values['password'] = \Hash::make('123456');
+				$Cuenta = new Cuenta();
+				$Cuenta->add($values);
+
+				$values['cuenta_id'] = $Cuenta->getKey();
+				$CuentaRol = new CuentaRol();
+				$CuentaRol->add($values);
+			});
+		} catch (Exception $e) {
+			return \Redirect::back()->with('error', $e->getMessage());
+		}
+
+		return \Redirect::back()->with('success', 'Registrado');
 	}
 
 }

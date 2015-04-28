@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: App
-        psr4_prefix: App
+        namespace: Clinica
+        psr4_prefix: Clinica
         src_path: app
