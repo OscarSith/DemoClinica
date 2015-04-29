@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Paciente</title>
 </head>
 <body>
-	<a href="registrar-paciente">Registrar Paciente</a>
+	<a href="/">Home</a>
 	<hr>
-	<h1>Registrar</h1>
-	<form action="register" method="POST">
+	<h1>Nuevo paciente</h1>
+	<form action="{{ route('newPaciente')}}" method="POST">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div>
 			<input type="text" name="nombre" placeholder="Nombre">
@@ -23,32 +23,21 @@
 			<input type="text" name="nacimiento" placeholder="Nacimiento">
 		</div>
 		<div>
-			<input type="email" name="correo" placeholder="Correo electrónico">
+			<input type="text" name="dni" placeholder="DNI">
 		</div>
 		<div>
-			<input type="text" name="login" placeholder="Login">
+			<input type="correo" name="correo" placeholder="Correo electrónico">
 		</div>
 		<div>
-			<input type="text" name="dni" placeholder="Dni">
-		</div>
-		<div>
-			<label>Cargo</label>
-			<select name="cargo_id" id="cargo_id">
-			@foreach($cargos as $rec)
-				<option value="{{ $rec->id }}">{{ $rec->cargo }}</option>
-			@endforeach
-			</select>
-		</div>
-		<div>
-			<label>Tipo Rol</label>
-			<select name="rol_id" id="rol_id">
-			@foreach($roles as $rec)
+			<select name="servicio_id">
+			@foreach($servicios as $rec)
 				<option value="{{ $rec->id }}">{{ $rec->nombre }}</option>
 			@endforeach
 			</select>
 		</div>
-		<div><button>Insertar</button></div>
-
+		<div>
+			<button>Guardar</button>
+		</div>
 		@if(Session::has('error'))
 		<p>{{ Session::get('error') }}</p>
 		@endif

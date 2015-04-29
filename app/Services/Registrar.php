@@ -1,6 +1,6 @@
 <?php namespace Clinica\Services;
 
-use Clinica\User;
+use Clinica\Cuenta\Cuenta;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 
@@ -29,7 +29,7 @@ class Registrar implements RegistrarContract {
 	 */
 	public function create(array $data)
 	{
-		return User::create([
+		return Cuenta::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
 			'password' => bcrypt($data['password']),

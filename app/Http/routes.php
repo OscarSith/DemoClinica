@@ -12,9 +12,12 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('registrar-paciente', 'WelcomeController@paciente');
 
 Route::get('home', 'HomeController@index');
+
 Route::post('register', ['as' => 'register', 'uses' => 'WelcomeController@register']);
+Route::post('add-paciente', ['as' => 'newPaciente', 'uses' => 'WelcomeController@addPaciente']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

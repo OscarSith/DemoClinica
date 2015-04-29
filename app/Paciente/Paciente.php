@@ -1,14 +1,15 @@
-<?php namespace Clinica;
+<?php namespace Clinica\Paciente;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Personal extends Model {
+class Paciente extends Model {
 
-	protected $table = 'personal';
+	protected $table = 'paciente';
 
 	protected $fillable = [
+		'tipo_analisis',
 		'persona_id',
-		'cargo_id',
+		'servicio_id'
 	];
 
 	public function add($values)
@@ -16,4 +17,5 @@ class Personal extends Model {
 		$this->fill($values);
 		return $this->save();
 	}
+
 }

@@ -1,15 +1,14 @@
-<?php namespace Clinica;
+<?php namespace Clinica\Personal;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CuentaRol extends Model {
+class Personal extends Model {
 
-	protected $table = 'cuenta_rol';
+	protected $table = 'personal';
 
 	protected $fillable = [
-		'id_app',
-		'rol_id',
-		'cuenta_id'
+		'persona_id',
+		'cargo_id',
 	];
 
 	public function add($values)

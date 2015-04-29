@@ -1,12 +1,14 @@
 <?php namespace Clinica\Http\Controllers;
 
 use Request;
-use Clinica\Cargo;
-use Clinica\Rol;
-use Clinica\Persona;
-use Clinica\Personal;
-use Clinica\Cuenta;
-use Clinica\CuentaRol;
+use Clinica\Cargo\Cargo;
+use Clinica\Rol\Rol;
+use Clinica\Persona\Persona;
+use Clinica\Personal\Personal;
+use Clinica\Cuenta\Cuenta;
+use Clinica\CuentaRol\CuentaRol;
+use Clinica\Servicio\Servicio;
+use Clinica\Paciente\Paciente;
 
 class WelcomeController extends Controller {
 
@@ -75,4 +77,32 @@ class WelcomeController extends Controller {
 		return \Redirect::back()->with('success', 'Registrado');
 	}
 
+	public function paciente()
+	{
+		$Servicio = new Servicio();
+		$servicios = $Servicio->listar();
+
+		return view('paciente', compact('servicios'));
+	}
+
+	public function addPaciente()
+	{
+		$values = Request::all();
+		try {
+			\DB::transaction(function() use ($values) {
+
+				$Persona = new Persona();
+				$Persona->newRegister($values);
+
+				$values['persona_id'] = $Persona->getKey();
+				$values['tipo_analisis'] = 'No se que analisis es';
+				$Paciente = new Paciente();
+				$Paciente->add($values);
+			});
+		} catch (Exception $e) {
+			return \Redirect::back()->with('error', $e->getMessage());
+		}
+
+		return \Redirect::back()->with('success', 'Paciente agregado exitosamente');
+	}
 }

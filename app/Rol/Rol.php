@@ -1,4 +1,4 @@
-<?php namespace Clinica;
+<?php namespace Clinica\Rol;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,4 +1,4 @@
-<?php namespace Clinica;
+<?php namespace Clinica\Cuenta;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
