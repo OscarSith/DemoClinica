@@ -8,7 +8,7 @@ class Rol extends Model {
 
 	public function listar()
 	{
-		return $this->get(['id', 'nombre']);
+		return $this->lists('nombre', 'id');
 	}
 
 }

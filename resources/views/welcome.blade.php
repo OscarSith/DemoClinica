@@ -8,44 +8,38 @@
 	<a href="registrar-paciente">Registrar Paciente</a>
 	<hr>
 	<h1>Registrar</h1>
-	<form action="register" method="POST">
-		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+	@include('partials.show_errors')
+
+	{!! Form::open(['route' => 'register', 'method' => 'post', 'novalidate']) !!}
 		<div>
-			<input type="text" name="nombre" placeholder="Nombre">
+			{!! Form::text('nombre', null, ['placeholder' => 'Nombre']) !!}
 		</div>
 		<div>
-			<input type="text" name="apellido_pa" placeholder="Apellido_pa">
+			{!! Form::text('apellido_pa', null, ['placeholder' => 'Appelido Paterno']) !!}
 		</div>
 		<div>
-			<input type="text" name="apellido_ma" placeholder="Apellido_ma">
+			{!! Form::text('apellido_ma', null, ['placeholder' => 'Apellido_ma']) !!}
 		</div>
 		<div>
-			<input type="text" name="nacimiento" placeholder="Nacimiento">
+			{!! Form::text('nacimiento', null, ['placeholder' => 'Nacimiento']) !!}
 		</div>
 		<div>
-			<input type="email" name="correo" placeholder="Correo electrónico">
+			{!! Form::email('correo', null, ['placeholder' => 'Correo electrónico']) !!}
 		</div>
 		<div>
-			<input type="text" name="login" placeholder="Login">
+			{!! Form::text('login', null, ['placeholder' => 'Login']) !!}
 		</div>
 		<div>
-			<input type="text" name="dni" placeholder="Dni">
+			{!! Form::text('dni', null, ['placeholder' => 'Dni']) !!}
 		</div>
 		<div>
 			<label>Cargo</label>
-			<select name="cargo_id" id="cargo_id">
-			@foreach($cargos as $rec)
-				<option value="{{ $rec->id }}">{{ $rec->cargo }}</option>
-			@endforeach
-			</select>
+			{!! Form::select('cargo_id', $cargos, old('cargo_id')) !!}
 		</div>
 		<div>
 			<label>Tipo Rol</label>
-			<select name="rol_id" id="rol_id">
-			@foreach($roles as $rec)
-				<option value="{{ $rec->id }}">{{ $rec->nombre }}</option>
-			@endforeach
-			</select>
+			{!! Form::select('rol_id', $roles, old('rol_id')) !!}
 		</div>
 		<div><button>Insertar</button></div>
 
@@ -56,6 +50,6 @@
 		@if(Session::has('success'))
 		<p>{{ Session::get('success') }}</p>
 		@endif
-	</form>
+	{!! Form::close() !!}
 </body>
 </html>

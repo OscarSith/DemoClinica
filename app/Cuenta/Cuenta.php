@@ -37,4 +37,8 @@ class Cuenta extends Model implements AuthenticatableContract, CanResetPasswordC
 		return $this->save();
 	}
 
+	public function setPasswordAttribute($value)
+	{
+		$this->attributes['password'] = bcrypt($value);// \Hash::make($value);
+	}
 }

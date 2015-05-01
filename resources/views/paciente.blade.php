@@ -8,32 +8,29 @@
 	<a href="/">Home</a>
 	<hr>
 	<h1>Nuevo paciente</h1>
-	<form action="{{ route('newPaciente')}}" method="POST">
-		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	@include('partials.show_errors')
+
+	{!! Form::open(['route' => 'newPaciente', 'method' => 'POST', 'novalidate']) !!}
 		<div>
-			<input type="text" name="nombre" placeholder="Nombre">
+			{!! Form::text('nombre', null, ['placeholder'=>"Nombre"]) !!}
 		</div>
 		<div>
-			<input type="text" name="apellido_pa" placeholder="Apellido_pa">
+			{!! Form::text('apellido_pa', null, ['placeholder'=>"Apellido_pa"]) !!}
 		</div>
 		<div>
-			<input type="text" name="apellido_ma" placeholder="Apellido_ma">
+			{!! Form::text('apellido_ma', null, ['placeholder'=>"Apellido_ma"]) !!}
 		</div>
 		<div>
-			<input type="text" name="nacimiento" placeholder="Nacimiento">
+			{!! Form::text('nacimiento', null, ['placeholder'=>"Nacimiento"]) !!}
 		</div>
 		<div>
-			<input type="text" name="dni" placeholder="DNI">
+			{!! Form::text('dni', null, ['placeholder'=>"DNI"]) !!}
 		</div>
 		<div>
-			<input type="correo" name="correo" placeholder="Correo electrónico">
+			{!! Form::email('correo', null, ['placeholder'=>"Correo Electrónico"]) !!}
 		</div>
 		<div>
-			<select name="servicio_id">
-			@foreach($servicios as $rec)
-				<option value="{{ $rec->id }}">{{ $rec->nombre }}</option>
-			@endforeach
-			</select>
+			{!! Form::select('servicio_id', $servicios, old('servicio_id')) !!}
 		</div>
 		<div>
 			<button>Guardar</button>

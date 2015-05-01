@@ -8,7 +8,7 @@ class Cargo extends Model {
 
 	public function listar()
 	{
-		return $this->get(['id', 'cargo']);
+		return $this->lists('cargo', 'id');
 	}
 
 }

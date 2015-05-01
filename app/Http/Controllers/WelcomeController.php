@@ -1,6 +1,5 @@
 <?php namespace Clinica\Http\Controllers;
 
-use Request;
 use Clinica\Cargo\Cargo;
 use Clinica\Rol\Rol;
 use Clinica\Persona\Persona;
@@ -9,6 +8,9 @@ use Clinica\Cuenta\Cuenta;
 use Clinica\CuentaRol\CuentaRol;
 use Clinica\Servicio\Servicio;
 use Clinica\Paciente\Paciente;
+
+use Clinica\Http\Requests\RegisterAccount;
+use Clinica\Http\Requests\RegisterPatient;
 
 class WelcomeController extends Controller {
 
@@ -49,9 +51,9 @@ class WelcomeController extends Controller {
 		return view('welcome', compact('cargos', 'roles'));
 	}
 
-	public function register()
+	public function register(RegisterAccount $request)
 	{
-		$values = Request::all();
+		$values = $request->all();
 		try {
 			\DB::transaction(function() use ($values){
 				$Persona = new Persona();
@@ -62,7 +64,7 @@ class WelcomeController extends Controller {
 				$Personal->add($values);
 
 				$values['personal_id'] = $Personal->getKey();
-				$values['password'] = \Hash::make('123456');
+				$values['password'] = '123456';
 				$Cuenta = new Cuenta();
 				$Cuenta->add($values);
 
@@ -85,9 +87,9 @@ class WelcomeController extends Controller {
 		return view('paciente', compact('servicios'));
 	}
 
-	public function addPaciente()
+	public function addPaciente(RegisterPatient $request)
 	{
-		$values = Request::all();
+		$values = $request->all();
 		try {
 			\DB::transaction(function() use ($values) {
 
