@@ -35,12 +35,17 @@ class WelcomeController extends Controller {
 		$this->middleware('guest');
 	}
 
+	public function login()
+	{
+		return view('auth.login');
+	}
+
 	/**
-	 * Show the application welcome screen to the user.
+	 * Show the application login screen to the user.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function registerAccount()
 	{
 		$Cargo = new Cargo();
 		$cargos = $Cargo->listar();
@@ -48,7 +53,7 @@ class WelcomeController extends Controller {
 		$Rol = new Rol();
 		$roles = $Rol->listar();
 
-		return view('welcome', compact('cargos', 'roles'));
+		return view('registerAccount', compact('cargos', 'roles'));
 	}
 
 	public function register(RegisterAccount $request)

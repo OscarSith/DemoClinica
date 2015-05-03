@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'HomeController@index');
+Route::get('login', 'WelcomeController@login');
+Route::get('register-account', 'WelcomeController@registerAccount');
 Route::get('registrar-paciente', 'WelcomeController@paciente');
-
-Route::get('home', 'HomeController@index');
 
 Route::post('register', ['as' => 'register', 'uses' => 'WelcomeController@register']);
 Route::post('add-paciente', ['as' => 'newPaciente', 'uses' => 'WelcomeController@addPaciente']);
