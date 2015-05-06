@@ -1,65 +1,78 @@
-@extends('app')
+@extends('layout.master_welcome')
 
 @section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Register</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
-
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Name</label>
-							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Confirm Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password_confirmation">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Register
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+<body class="register-page">
+  <div class="register-box">
+<div class="register-logo">
+  <a href="{{ url('login') }}"><b>Admin</b>Clinica</a>
 </div>
-@endsection
+
+<div class="register-box-body">
+  <p class="login-box-msg">Register a new membership</p>
+  {!! Form::open(['route' => 'register', 'method' => 'post']) !!}
+    @include('partials.show_errors')
+    @if(Session::has('error'))
+    <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
+    @endif
+    <div class="form-group has-feedback">
+      {!! Form::text('nombre', null, ['placeholder' => 'Nombre', 'class' => 'form-control']) !!}
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      {!! Form::text('apellido_pa', null, ['placeholder' => 'Appelido Paterno', 'class' => 'form-control']) !!}
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      {!! Form::text('apellido_ma', null, ['placeholder' => 'Apellido Materno', 'class' => 'form-control']) !!}
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      {!! Form::text('login', null, ['placeholder' => 'Login', 'class' => 'form-control']) !!}
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      {!! Form::email('correo', null, ['placeholder' => 'Correo electrónico', 'class' => 'form-control']) !!}
+      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      {!! Form::text('dni', null, ['placeholder' => 'DNI', 'class' => 'form-control']) !!}
+      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      {!! Form::text('nacimiento', null, ['placeholder' => 'Nacimiento', 'class' => 'form-control', 'id' => 'nacimiento', 'data-inputmask' => "'alias': 'yyyy/mm/dd'"]) !!}
+      <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+      <input type="password" name="password" class="form-control" placeholder="Contraseña"/>
+      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+    <div class="form-group">
+      {!! Form::select('cargo_id', $cargos, old('cargo_id'), ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
+      {!! Form::select('rol_id', $roles, old('rol_id'), ['class' => 'form-control']) !!}
+    </div>
+    <!--<div class="form-group has-feedback">
+      <input type="password" class="form-control" placeholder="Retype password"/>
+      <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+    </div>-->
+    <div class="row">
+      <div class="col-sm-8">
+        <a href="{{ url('login') }}">I already have a membership</a>
+      </div>
+      <div class="col-xs-4">
+        <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+      </div><!-- /.col -->
+    </div>
+{!! Form::close() !!}
+</div><!-- /.form-box -->
+@stop
+@section('inputmask')
+  <script src="{{ asset('plugins/input-mask/jquery.inputmask.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('plugins/input-mask/jquery.inputmask.date.extensions.js') }}" type="text/javascript"></script>
+  <script>
+  $(function(){
+    $("#nacimiento").inputmask();
+  });
+  </script>
+@stop

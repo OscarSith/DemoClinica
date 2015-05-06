@@ -1,5 +1,12 @@
 <?php namespace Clinica\Http\Controllers;
 
+use Clinica\Paciente\RepoPatient;
+use Clinica\Servicio\Servicio;
+use Clinica\Paciente\Paciente;
+use Clinica\Persona\Persona;
+
+use Clinica\Http\Requests\RegisterPatient;
+
 class HomeController extends Controller {
 
 	/*
@@ -30,7 +37,34 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+		$RepoPatient = new RepoPatient();
+		$Servicio = new Servicio();
+
+		$pacientes = $RepoPatient->getPactients();
+
+		$servicios = $Servicio->listar();
+
+		return view('home', compact('pacientes', 'servicios'));
 	}
 
+	public function addPaciente(RegisterPatient $request)
+	{
+		$values = $request->all();
+		try {
+			\DB::transaction(function() use ($values) {
+
+				$Persona = new Persona();
+				$Persona->newRegister($values);
+
+				$values['persona_id'] = $Persona->getKey();
+				$values['tipo_analisis'] = 'No se que analisis es';
+				$Paciente = new Paciente();
+				$Paciente->add($values);
+			});
+		} catch (Exception $e) {
+			return \Redirect::back()->with('error', $e->getMessage());
+		}
+
+		return \Redirect::back()->with('success', 'Paciente agregado exitosamente');
+	}
 }

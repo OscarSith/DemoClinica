@@ -11,15 +11,24 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('login', 'WelcomeController@login');
-Route::get('register-account', 'WelcomeController@registerAccount');
-Route::get('registrar-paciente', 'WelcomeController@paciente');
+Route::group(['middleware' => 'guest'], function($route) {
 
-Route::post('register', ['as' => 'register', 'uses' => 'WelcomeController@register']);
-Route::post('add-paciente', ['as' => 'newPaciente', 'uses' => 'WelcomeController@addPaciente']);
+	$route->get('login', 'Auth\AuthController@login');
+	$route->post('login', 'Auth\AuthController@signin');
+	$route->get('register-account', 'Auth\AuthController@register');
+	$route->get('registrar-paciente', 'WelcomeController@paciente');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+});
+
+Route::group(['middleware' => 'auth'], function($route) {
+	$route->get('/', 'HomeController@index');
+	$route->post('add-paciente', ['as' => 'newPaciente', 'uses' => 'HomeController@addPaciente']);
+	$route->get('logout', 'Auth\AuthController@getLogout');
+});
+
+Route::post('register', ['as' => 'register', 'uses' => 'Auth\AuthController@registerAccount']);
+
+// Route::controllers([
+// 	'auth' => 'Auth\AuthController',
+// 	// 'password' => 'Auth\PasswordController',
+// ]);

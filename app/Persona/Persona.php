@@ -21,5 +21,4 @@ class Persona extends Model {
 		$this->estado = 1;
 		return $this->save();
 	}
-
 }

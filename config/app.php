@@ -141,6 +141,7 @@ return [
 		 */
 
 		'Collective\Html\HtmlServiceProvider',
+		'Barryvdh\Debugbar\ServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -150,7 +151,6 @@ return [
 		'Clinica\Providers\ConfigServiceProvider',
 		'Clinica\Providers\EventServiceProvider',
 		'Clinica\Providers\RouteServiceProvider',
-
 	],
 
 	/*
@@ -199,13 +199,13 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-		'Debugbar' => 'Barryvdh\Debugbar\Facade',
 
 		/**
 		 * Vendor Aliases
 		 */
 		'Form' => 'Collective\Html\FormFacade',
 		'Html' => 'Collective\Html\HtmlFacade',
+		'Debugbar' => 'Barryvdh\Debugbar\Facade',
 
 	],
 

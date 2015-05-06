@@ -17,5 +17,4 @@ class Paciente extends Model {
 		$this->fill($values);
 		return $this->save();
 	}
-
 }
